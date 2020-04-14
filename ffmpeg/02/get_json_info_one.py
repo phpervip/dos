@@ -11,8 +11,8 @@ def is_json(myjson):
 def get_json_data(filename):
 	# 执行probe执行
 	#print(filename)
-	with open(filename, 'r', encoding='utf-8') as f:
-		# print(filename)
+	with open(filename, 'r') as f:
+		#print(filename)
 		probe_str = f.read()
 
 		if(is_json(probe_str)):
@@ -23,9 +23,7 @@ def get_json_data(filename):
 			return 0
 		if "format" not in probe:
 			return 0	
-
-		#print(probe)
-	# sys.exit()
+	
 	video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
 	audio_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'audio'), None)
 	video_format = probe['format']
@@ -34,10 +32,13 @@ def get_json_data(filename):
 		#print('No video stream found', file=sys.stderr)
 		#sys.exit(1)
 		return 0
-	
+	if audio_stream is None:
+		#print('No audio stream found', file=sys.stderr)
+		#sys.exit(1)	
+		return 0
+
 	# 时长
 	duration = (video_format['duration'])   
-
 	# 比特率
 	bit_rate = (video_format['bit_rate'])
 	# 视频编码名称
@@ -53,16 +54,10 @@ def get_json_data(filename):
 	height = int(video_stream['height'])
 	# 视频帧数
 	num_frames = int(video_stream['nb_frames'])
-
 	# 视频宽高比
 	# display_aspect_ratio = (video_stream['display_aspect_ratio'])
-	if audio_stream is None:
-		#print('No audio stream found', file=sys.stderr)
-		#sys.exit(1)	
-		audio_bitrate = 0
-	else:
-		# 音频比特率
-		audio_bitrate = (audio_stream['bit_rate'])
+	# 音频比特率
+	audio_bitrate = (audio_stream['bit_rate'])
 
 	# print('width: {}'.format(width))
 	# print('height: {}'.format(height))
@@ -86,4 +81,7 @@ def get_json_data(filename):
 	video_info.append(format(audio_bitrate))
 	return video_info
 
+
+video_info = get_json_data('mp4info/02-037-0285.mp4.txt')
+print(video_info)
 	
