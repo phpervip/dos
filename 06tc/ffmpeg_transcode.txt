@@ -1,0 +1,17 @@
+
+:: LINUX
+::ffmpeg -y -i /ciguang/media/source/DT/DT-004/DT-004-0023.mp4 -c:v libx265 -b:v 2000k -x265-params pass=1 -c:a aac -b:a 192k -f mp4 /dev/null 2>/ciguang/media/log/DT/DT-004/DT-004-0023_2160p_1.log
+::這是第一次轉碼，
+::ffmpeg -i /ciguang/media/source/DT/DT-004/DT-004-0023.mp4 -c:v libx265 -b:v 2000k -x265-params pass=2 -c:a aac -b:a 192k /ciguang/media/2160p/DT/DT-004/DT-004-0023.mp4 /dev/null 2>/ciguang/media/log/DT/DT-004/DT-004-0023_2160p_2.log
+::這是第二次轉碼，兩次都有保存日誌
+
+:: DOS
+::ffmpeg -i %%v -c:v libx264 -preset slow -b:v 2420k -pass 1 -an -f mp4 -y NUL
+::ffmpeg -i D:\src.mov -c:v libx264 -preset slow -b:v 2420k -pass 2 -c:a copy D:\dest6.mp4
+
+因为运行过程中，会报这个错。就在mac上测试了一个带copy的简单的。
+
+ffmpeg -i demo.mp4 copy -acodec copy -ss 00:00:00 -to 00:00:01 demo1.mp4 -y 这句在mac 上能用。在我的windows上不能用。
+报错为:
+[NULL @ 000002c3dd850740] Unable to find a suitable output format for 'copy'
+copy: Invalid argument

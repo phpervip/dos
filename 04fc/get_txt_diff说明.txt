@@ -1,0 +1,9 @@
+
+1. get_filelist.bat，生成filelist.txt。 （如果盘符不同，先替换为盘符相同）
+
+2. get_md5.bat,  生成 对应filelist.txt的md5信息文件。 
+
+3. 运行get_txt_diff.bat, 将比较filemd51.txt, filemd52.txt 
+ (也可以指定文件名)
+
+4. diff.txt显示相个文件的不同
